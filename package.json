@@ -1,0 +1,19 @@
+{
+    "name": "@kojidev/openapi-ts",
+    "version": "0.1.0",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
+    },
+    "main": "lib/index.js",
+    "devDependencies": {
+        "@types/node": "^13.13.9",
+        "ts-node": "^8.10.1",
+        "typescript": "^3.9.3"
+    },
+    "files": [
+        "lib"
+    ],
+    "scripts": {
+        "build": "tsc"
+    }
+}
