@@ -1,0 +1,104 @@
+import { Schema } from '../schema/Schema';
+import { Reference } from '../schema/Reference';
+import { Discriminator } from '../schema/Discriminator';
+import { NoExtraProperties } from './noExtraProperties';
+import { Components } from '../schema/Components';
+import { Parameter } from '../schema/Parameter';
+import { Response } from '../schema/Response';
+
+export type AllowRef<T> =
+  T extends NoExtraProperties<Reference> ? (T | Ref<keyof Components>) :
+    T extends Discriminator ? (T | AllowRefDiscriminator) :
+      T extends Array<infer K> ? ArrayAllowRef<K> :
+        T extends object ? ObjectAllowRef<T> :
+          T;
+
+type AllowRefDiscriminator = {
+  propertyName: string;
+  mapping?: { [key: string]: string | InlineRef<Ref<'schemas'>>; };
+}
+
+export type ObjectAllowRef<T extends Schema | Parameter | Response> = {
+  [K in keyof T]: AllowRef<T[K]>;
+}
+
+export type ArrayAllowRef<K> = Array<AllowRef<K>>
+
+export function schemaRef<T extends ObjectAllowRef<Schema>>(
+  key: string,
+  schema: T,
+): Ref<'schemas', T> {
+  return new Ref(
+    schema,
+    'schemas',
+    key,
+  );
+}
+
+export class Ref<CK extends keyof Components, V extends ObjectAllowRef<Exclude<Components[CK][string], Reference>> = any> {
+  readonly value: V;
+  readonly componentsKey: CK;
+  readonly key: string;
+
+  constructor(
+    value: V,
+    componentsKey: CK,
+    key: string,
+  ) {
+    this.componentsKey = componentsKey;
+    this.key = key;
+    this.value = value;
+  }
+}
+
+class InlineRef<T extends Ref<'schemas'>> {
+  readonly inlinedRef: T;
+
+  constructor(inlinedRef: T) {
+    this.inlinedRef = inlinedRef;
+  }
+}
+
+export function inlineRef<T extends Ref<'schemas'>>(
+  ref: Ref<'schemas'>,
+): InlineRef<Ref<'schemas'>> {
+  return new InlineRef(ref);
+}
+
+function toReference<K extends keyof Components>(src: Ref<K>, components: Components): Reference {
+  const key = src.key.split(' ').join('-') as keyof Components[K];
+  components[src.componentsKey][key] = resolveRefs(src.value, components) as Components[K][typeof key];
+
+  return {
+    $ref: `#/components/${src.componentsKey}/${key}`,
+  };
+}
+
+export function resolveRefs<T>(
+  src: T,
+  components: Components,
+): T extends ObjectAllowRef<infer A> ? A :
+  T extends ArrayAllowRef<infer A> ? A[] : never {
+  if (Array.isArray(src)) {
+    return src.map(it => {
+      return resolveRefs(it, components);
+    }) as any;
+  } else if (typeof src === 'object') {
+    if (src instanceof InlineRef) {
+      return toReference(src.inlinedRef, components).$ref as any;
+    } else if (src instanceof Ref) {
+      return toReference(src, components) as any;
+    }
+
+    const result: any = {};
+    Object
+      .entries(src)
+      .forEach(([key, value]) => {
+        result[key] = resolveRefs(value, components);
+      });
+
+    return result;
+  } else {
+    return src as any;
+  }
+}
