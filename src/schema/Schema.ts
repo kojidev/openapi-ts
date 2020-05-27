@@ -1,14 +1,6 @@
 import { Reference } from './Reference';
 import { Discriminator } from './Discriminator';
-
-// export type Schema =
-//   ArraySchema |
-//   ObjectSchema |
-//   StringSchema |
-//   BooleanSchema |
-//   NumberSchema |
-//   IntegerSchema |
-//   ComposedSchema;
+import { ExternalDocumentation } from "./ExternalDocumentation";
 
 export type Schema<T = any> = T extends ObjectSchema ? ObjectSchema :
   T extends ArraySchema ? ArraySchema :
@@ -19,38 +11,72 @@ export type Schema<T = any> = T extends ObjectSchema ? ObjectSchema :
             T extends ComposedSchema ? ComposedSchema : never;
 
 interface CommonSchema {
-  enum?: any[];
+  deprecated?: boolean;
+  description?: string;
+  externalDocs?: ExternalDocumentation;
+  nullable?: boolean;
+  readOnly?: boolean;
   title?: string;
-  example?: any;
+  writeOnly?: boolean;
 }
 
 export interface ArraySchema extends CommonSchema {
-  type: 'array';
   items: Schema | Reference;
+  maxItems?: number;
+  minItems?: number;
+  type: 'array';
+  uniqueItems?: boolean;
 }
 
 export interface ObjectSchema extends CommonSchema {
+  additionalProperties?: boolean | Schema | Reference;
+  discriminator?: Discriminator;
+  maxProperties?: number;
+  minProperties?: number;
+  properties: { [propertyName: string]: Schema | Reference; };
+  required?: string[];
   type: 'object';
-  properties: { [key: string]: Schema | Reference };
 }
 
-interface PrimitiveSchema extends CommonSchema {
+export interface StringSchema {
+  default?: string;
+  enum?: string[];
+  example?: string | null;
   format?: string;
-}
-
-export interface StringSchema extends PrimitiveSchema {
+  maxLength?: number;
+  minLength?: number;
+  pattern?: string;
   type: 'string'
 }
 
-export interface BooleanSchema extends PrimitiveSchema {
+export interface BooleanSchema {
+  default?: boolean;
+  example?: boolean | null;
+  format?: string;
   type: 'boolean'
 }
 
-export interface NumberSchema extends PrimitiveSchema {
-  type: 'number'
+export interface NumberSchema {
+  default?: number;
+  example?: number | null;
+  exclusiveMaximum?: number;
+  exclusiveMinimum?: number;
+  format?: string;
+  maximum?: number;
+  minimum?: number;
+  multipleOf?: number;
+  type: 'number';
 }
 
-export interface IntegerSchema extends PrimitiveSchema {
+export interface IntegerSchema {
+  default?: number;
+  example?: number | null;
+  exclusiveMaximum?: number;
+  exclusiveMinimum?: number;
+  format?: string;
+  maximum?: number;
+  minimum?: number;
+  multipleOf?: number;
   type: 'integer'
 }
 
@@ -58,5 +84,6 @@ export interface ComposedSchema extends CommonSchema {
   oneOf?: (Schema | Reference)[];
   allOf?: (Schema | Reference)[];
   anyOf?: (Schema | Reference)[];
+  not?: Array<Schema|Reference>;
   discriminator?: Discriminator;
 }

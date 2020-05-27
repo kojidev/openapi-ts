@@ -1,6 +1,6 @@
 import {Operation} from './Operation';
 
-export type PathItem = {
+export interface PathItem {
     get?: Operation;
     post?: Operation;
 }

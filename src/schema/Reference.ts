@@ -1,3 +1,3 @@
-export type Reference = {
+export interface Reference {
     $ref: string
 }
