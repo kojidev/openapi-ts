@@ -1,5 +1,5 @@
 import {MediaType} from './MediaType';
 
-export type RequestBody = {
+export interface RequestBody {
     content: { [key: string]: MediaType };
 }

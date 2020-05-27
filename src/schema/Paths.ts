@@ -1,5 +1,5 @@
 import {PathItem} from "./PathItem";
 
-export type Paths = {
+export interface Paths {
     [key: string]: PathItem;
 }
