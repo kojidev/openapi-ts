@@ -1,6 +1,6 @@
 import {ServerVariable} from "./ServerVariable";
 
-export type Server = {
+export interface Server {
     url: string;
     description?: string;
     variables?: { [key: string]: ServerVariable }

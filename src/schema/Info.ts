@@ -1,7 +1,7 @@
 import {Contact} from "./Contact";
 import {License} from "./License";
 
-export type Info = {
+export interface Info {
     title: string;
     description?: string;
     termsOfService?: string;

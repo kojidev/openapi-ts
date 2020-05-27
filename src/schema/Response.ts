@@ -1,6 +1,6 @@
 import {MediaType} from './MediaType';
 
-export type Response = {
+export interface Response {
     description: string;
     content?: { [key: string]: MediaType };
 }

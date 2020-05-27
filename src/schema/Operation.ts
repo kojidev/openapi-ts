@@ -3,7 +3,7 @@ import {Reference} from './Reference';
 import {RequestBody} from './RequestBody';
 import {Responses} from './Responses';
 
-export type Operation = {
+export interface Operation {
     tags?: string[];
     summary?: string;
     operationId?: string;
