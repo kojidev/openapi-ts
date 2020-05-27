@@ -1,2 +1,2 @@
-export * as utils from './utils'
-export * as schema from './schema'
+export * from './utils'
+export * from './schema'
