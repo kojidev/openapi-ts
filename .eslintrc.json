@@ -31,7 +31,7 @@
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
     "max-classes-per-file": "off",
-    "max-len": ["error", { "code": 120 }],
+    "max-len": ["warn", {"code": 120}],
     "newline-after-var": ["warn"],
     "newline-before-return": ["warn"],
     "no-console": ["warn"],
