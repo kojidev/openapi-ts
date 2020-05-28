@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches-ignore: [master]
+    branches: [master]
 
 jobs:
   build:
@@ -16,3 +16,7 @@ jobs:
         node-version: 12.X
     - run: npm ci
     - run: npm run build
+    - name: npm publish
+      run: |
+        npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
+        npm publish --access public

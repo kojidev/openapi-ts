@@ -35,11 +35,7 @@ export class Builder {
 
     // Check for circular references
 
-    const components: Components = {
-      schemas: {},
-      responses: {},
-      parameters: {},
-    };
+    const components: Components = {};
 
     const paths = resolveRefs(this.paths, components);
 

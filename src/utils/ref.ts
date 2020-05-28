@@ -3,8 +3,6 @@ import { Reference } from '../schema/Reference';
 import { Discriminator } from '../schema/Discriminator';
 import { NoExtraProperties } from './noExtraProperties';
 import { Components } from '../schema/Components';
-import { Parameter } from '../schema/Parameter';
-import { Response } from '../schema/Response';
 
 export type AllowRef<T> =
   T extends NoExtraProperties<Reference> ? (T | Ref<keyof Components>) :
@@ -18,7 +16,13 @@ type AllowRefDiscriminator = {
   mapping?: { [key: string]: string | InlineRef<Ref<'schemas'>>; };
 }
 
-export type ObjectAllowRef<T extends Schema | Parameter | Response> = {
+type ComponentObjects = {
+  [K in keyof Components]-?: Exclude<NonNullable<Components[K]>[keyof Components[K]], Reference>;
+};
+
+type ComponentObject = ComponentObjects[keyof ComponentObjects];
+
+export type ObjectAllowRef<T extends ComponentObject> = {
   [K in keyof T]: AllowRef<T[K]>;
 }
 
@@ -35,7 +39,7 @@ export function schemaRef<T extends ObjectAllowRef<Schema>>(
   );
 }
 
-export class Ref<CK extends keyof Components, V extends ObjectAllowRef<Exclude<Components[CK][string], Reference>> = any> {
+export class Ref<CK extends keyof Components, V extends ObjectAllowRef<ComponentObject> = any> {
   readonly value: V;
   readonly componentsKey: CK;
   readonly key: string;
@@ -67,6 +71,10 @@ export function inlineRef<T extends Ref<'schemas'>>(
 
 function toReference<K extends keyof Components>(src: Ref<K>, components: Components): Reference {
   const key = src.key.split(' ').join('-') as keyof Components[K];
+  if (components[src.componentsKey] === undefined) {
+    components[src.componentsKey] = {};
+  }
+
   components[src.componentsKey][key] = resolveRefs(src.value, components) as Components[K][typeof key];
 
   return {

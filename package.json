@@ -12,6 +12,7 @@
         "lib"
     ],
     "scripts": {
-        "build": "tsc"
+        "build": "tsc",
+        "pack": "npm run build && PACKAGE_NAME=$(npm pack . | tail -n 1) && mv $PACKAGE_NAME package.tgz"
     }
 }

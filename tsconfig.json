@@ -8,8 +8,6 @@
         "sourceMap": true,
         "declaration": true,
         "declarationMap": true,
-        "target": "ESNext",
-        "moduleResolution": "Node",
         "strict": true
     }
 }
