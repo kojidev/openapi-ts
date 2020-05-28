@@ -30,8 +30,7 @@
     "no-multiple-empty-lines": ["warn", {"max": 1, "maxBOF": 0, "maxEOF": 0}],
     "no-param-reassign": "off",
     "padding-line-between-statements": ["warn", {"blankLine": "never", "prev": "import", "next": "import"}],
-    "sort-keys": ["warn", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}],
-    "sort-keys-fix/sort-keys-fix": "warn",
+    "sort-keys-fix/sort-keys-fix": ["warn", "asc", {"caseSensitive": true, "natural": false}],
     "typescript-sort-keys/interface": "warn",
     "typescript-sort-keys/string-enum": "warn"
   }
