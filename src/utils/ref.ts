@@ -12,9 +12,9 @@ export type AllowRef<T> =
           T;
 
 type AllowRefDiscriminator = {
-  propertyName: string;
   mapping?: { [key: string]: string | InlineRef<Ref<'schemas'>>; };
-}
+  propertyName: string;
+};
 
 type ComponentObjects = {
   [K in keyof Components]-?: Exclude<NonNullable<Components[K]>[keyof Components[K]], Reference>;
@@ -24,24 +24,15 @@ type ComponentObject = ComponentObjects[keyof ComponentObjects];
 
 export type ObjectAllowRef<T extends ComponentObject> = {
   [K in keyof T]: AllowRef<T[K]>;
-}
+};
 
-export type ArrayAllowRef<K> = Array<AllowRef<K>>
-
-export function schemaRef<T extends ObjectAllowRef<Schema>>(
-  key: string,
-  schema: T,
-): Ref<'schemas', T> {
-  return new Ref(
-    schema,
-    'schemas',
-    key,
-  );
-}
+export type ArrayAllowRef<K> = Array<AllowRef<K>>;
 
 export class Ref<CK extends keyof Components, V extends ObjectAllowRef<ComponentObject> = any> {
   readonly value: V;
+
   readonly componentsKey: CK;
+
   readonly key: string;
 
   constructor(
@@ -53,6 +44,17 @@ export class Ref<CK extends keyof Components, V extends ObjectAllowRef<Component
     this.key = key;
     this.value = value;
   }
+}
+
+export function schemaRef<T extends ObjectAllowRef<Schema>>(
+  key: string,
+  schema: T,
+): Ref<'schemas', T> {
+  return new Ref(
+    schema,
+    'schemas',
+    key,
+  );
 }
 
 class InlineRef<T extends Ref<'schemas'>> {
@@ -71,6 +73,7 @@ export function inlineRef<T extends Ref<'schemas'>>(
 
 function toReference<K extends keyof Components>(src: Ref<K>, components: Components): Reference {
   const key = src.key.split(' ').join('-') as keyof Components[K];
+
   if (components[src.componentsKey] === undefined) {
     components[src.componentsKey] = {};
   }
@@ -86,19 +89,18 @@ export function resolveRefs<T>(
   src: T,
   components: Components,
 ): T extends ObjectAllowRef<infer A> ? A :
-  T extends ArrayAllowRef<infer A> ? A[] : never {
+    T extends ArrayAllowRef<infer A> ? A[] : never {
   if (Array.isArray(src)) {
-    return src.map(it => {
-      return resolveRefs(it, components);
-    }) as any;
-  } else if (typeof src === 'object') {
+    return src.map((it) => resolveRefs(it, components)) as any;
+  } if (typeof src === 'object') {
     if (src instanceof InlineRef) {
       return toReference(src.inlinedRef, components).$ref as any;
-    } else if (src instanceof Ref) {
+    } if (src instanceof Ref) {
       return toReference(src, components) as any;
     }
 
     const result: any = {};
+
     Object
       .entries(src)
       .forEach(([key, value]) => {
@@ -106,7 +108,7 @@ export function resolveRefs<T>(
       });
 
     return result;
-  } else {
-    return src as any;
   }
+
+  return src as any;
 }

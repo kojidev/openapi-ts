@@ -1,7 +1,7 @@
-import {ExternalDocumentation} from './ExternalDocumentation';
+import { ExternalDocumentation } from './ExternalDocumentation';
 
 export interface Tag {
-    name: string;
-    description?: string;
-    externalDocs?: ExternalDocumentation;
+  description?: string;
+  externalDocs?: ExternalDocumentation;
+  name: string;
 }

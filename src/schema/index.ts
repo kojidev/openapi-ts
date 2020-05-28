@@ -3,7 +3,6 @@ export * from './Contact';
 export * from './Discriminator';
 export * from './Example';
 export * from './ExternalDocumentation';
-export * from './ExternalDocumentation';
 export * from './Header';
 export * from './Info';
 export * from './License';

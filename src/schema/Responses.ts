@@ -1,6 +1,6 @@
-import {Response} from './Response';
-import {Reference} from './Reference';
+import { Response } from './Response';
+import { Reference } from './Reference';
 
 export interface Responses {
-    [key: string]: Response | Reference;
+  [key: string]: Response | Reference;
 }

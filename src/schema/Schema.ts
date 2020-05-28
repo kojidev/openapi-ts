@@ -1,6 +1,6 @@
 import { Reference } from './Reference';
 import { Discriminator } from './Discriminator';
-import { ExternalDocumentation } from "./ExternalDocumentation";
+import { ExternalDocumentation } from './ExternalDocumentation';
 
 export type Schema<T = any> = T extends ObjectSchema ? ObjectSchema :
   T extends ArraySchema ? ArraySchema :
@@ -81,9 +81,9 @@ export interface IntegerSchema {
 }
 
 export interface ComposedSchema extends CommonSchema {
-  oneOf?: (Schema | Reference)[];
   allOf?: (Schema | Reference)[];
   anyOf?: (Schema | Reference)[];
-  not?: Array<Schema|Reference>;
   discriminator?: Discriminator;
+  not?: Array<Schema|Reference>;
+  oneOf?: (Schema | Reference)[];
 }

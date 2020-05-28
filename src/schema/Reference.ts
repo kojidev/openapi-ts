@@ -1,3 +1,3 @@
 export interface Reference {
-    $ref: string
+  $ref: string
 }

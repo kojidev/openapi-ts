@@ -1,5 +1,5 @@
 export interface ServerVariable {
-    enum?: string[];
-    default: string;
-    description?: string;
+  default: string;
+  description?: string;
+  enum?: string[];
 }

@@ -2,7 +2,7 @@ import {
   AuthorizationCodeOAuthFlow,
   ClientCredentialsOAuthFlow,
   ImplicitOAuthFlow,
-  ResourceOwnerPasswordOAuthFlow
+  ResourceOwnerPasswordOAuthFlow,
 } from './OAuthFlow';
 
 export interface OAuthFlows {
