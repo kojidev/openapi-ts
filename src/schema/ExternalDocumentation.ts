@@ -1,4 +1,4 @@
 export interface ExternalDocumentation {
-    description?: string;
-    url: string;
+  description?: string;
+  url: string;
 }

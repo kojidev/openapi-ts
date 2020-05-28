@@ -11,13 +11,11 @@ import {
 import { Components } from '../schema/Components';
 import { SecurityScheme } from '../schema';
 
-export function NewOpenAPI(): Builder {
-  return new Builder();
-}
-
 export class Builder {
   private info?: Info;
+
   private paths: AllowRef<Paths> = {};
+
   private securitySchemes: { [key: string]: SecurityScheme } = {};
 
   setInfo(info: Info): Builder {
@@ -54,17 +52,21 @@ export class Builder {
     const paths = resolveRefs(this.paths, components);
 
     const openapi: OpenAPI = {
-      openapi: openApiVersion,
-      info: this.info,
-      paths,
       components: {
         ...components,
         securitySchemes: this.securitySchemes,
       },
+      info: this.info,
+      openapi: openApiVersion,
+      paths,
     };
 
     // Check for circular json references
 
     return openapi;
   }
+}
+
+export function NewOpenAPI(): Builder {
+  return new Builder();
 }
