@@ -16,22 +16,29 @@
     "sort-keys-fix"
   ],
   "root": true,
+  "overrides": [
+    {
+      "files": ["src/schema/*.ts"],
+      "rules": {
+        "import/no-cycle": "off"
+      }
+    }
+  ],
   "rules": {
+    // TODO: Deprecated
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "import/prefer-default-export": "off",
-    "import/no-cycle": "off",
     "import/no-default-export": "error",
     "max-classes-per-file": "off",
-    "max-len": "off",
+    "max-len": ["error", { "code": 120 }],
     "newline-after-var": ["warn"],
     "newline-before-return": ["warn"],
-    "no-console": ["warn", {"allow": ["info", "warn"]}],
+    "no-console": ["warn"],
     "no-multiple-empty-lines": ["warn", {"max": 1, "maxBOF": 0, "maxEOF": 0}],
     "no-param-reassign": "off",
     "padding-line-between-statements": ["warn", {"blankLine": "never", "prev": "import", "next": "import"}],
     "sort-keys-fix/sort-keys-fix": ["warn", "asc", {"caseSensitive": true, "natural": false}],
-    "typescript-sort-keys/interface": "warn",
-    "typescript-sort-keys/string-enum": "warn"
+    "typescript-sort-keys/interface": "warn"
   }
 }
