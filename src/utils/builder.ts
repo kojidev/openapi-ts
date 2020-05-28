@@ -1,8 +1,15 @@
-import { OpenAPI, openApiVersion } from '../schema/OpenAPI';
+import {
+  OpenAPI,
+  openApiVersion,
+} from '../schema/OpenAPI';
 import { Info } from '../schema/Info';
 import { Paths } from '../schema/Paths';
-import { AllowRef, resolveRefs } from './ref';
+import {
+  AllowRef,
+  resolveRefs,
+} from './ref';
 import { Components } from '../schema/Components';
+import { SecurityScheme } from '../schema';
 
 export function NewOpenAPI(): Builder {
   return new Builder();
@@ -11,6 +18,7 @@ export function NewOpenAPI(): Builder {
 export class Builder {
   private info?: Info;
   private paths: AllowRef<Paths> = {};
+  private securitySchemes: { [key: string]: SecurityScheme } = {};
 
   setInfo(info: Info): Builder {
     this.info = info;
@@ -19,7 +27,13 @@ export class Builder {
   }
 
   addPaths(paths: AllowRef<Paths>): Builder {
-    this.paths = { ...this.paths, ...paths }
+    this.paths = { ...this.paths, ...paths };
+
+    return this;
+  }
+
+  addSecurityScheme(schemeName: string, scheme: SecurityScheme): Builder {
+    this.securitySchemes[schemeName] = scheme;
 
     return this;
   }
@@ -43,11 +57,14 @@ export class Builder {
       openapi: openApiVersion,
       info: this.info,
       paths,
-      components,
+      components: {
+        ...components,
+        securitySchemes: this.securitySchemes,
+      },
     };
 
     // Check for circular json references
 
-    return openapi
+    return openapi;
   }
 }
