@@ -1,13 +1,13 @@
 {
-    "include": [
-        "src",
-        "bin"
-    ],
-    "compilerOptions": {
-        "outDir": "lib",
-        "sourceMap": true,
-        "declaration": true,
-        "declarationMap": true,
-        "strict": true
-    }
+  "include": [
+    "src",
+    "bin"
+  ],
+  "compilerOptions": {
+    "outDir": "lib",
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "strict": true
+  }
 }
