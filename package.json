@@ -2,10 +2,7 @@
   "name": "@kojidev/openapi-ts",
   "version": "0.0.7",
   "description": "Library that helps to maintain OpenAPI documentation",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kojidev/openapi-ts"
-  },
+  "repository": "github:kojidev/openapi-ts",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
