@@ -22,10 +22,16 @@
       "rules": {
         "import/no-cycle": "off"
       }
+    },
+    {
+      "files": "example/bin/build.ts",
+      "rules": {
+        "no-console": "off"
+      }
     }
   ],
   "rules": {
-    // TODO: Deprecated
+    // TODO: https://github.com/iamturns/eslint-config-airbnb-typescript/issues/95
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "import/prefer-default-export": "off",

@@ -60,3 +60,6 @@ jobs:
 
     - name: Build library
       run: npm run build
+
+    - name: Build example spec
+      run: npx ts-node example/bin/build.ts
