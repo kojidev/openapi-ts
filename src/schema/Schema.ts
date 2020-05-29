@@ -20,7 +20,7 @@ interface CommonSchema<V> {
   readOnly?: boolean;
   title?: string;
   writeOnly?: boolean;
-  not?: Array<Schema | Reference>;
+  not?: (Schema | Reference)[];
 }
 
 export interface ArraySchema extends CommonSchema<any> {
