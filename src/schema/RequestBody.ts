@@ -1,5 +1,7 @@
 import { MediaType } from './MediaType';
 
 export interface RequestBody {
-  content: { [key: string]: MediaType };
+  content: { [mimeType: string]: MediaType; };
+  description?: string;
+  required?: boolean;
 }
