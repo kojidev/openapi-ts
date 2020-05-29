@@ -21,10 +21,6 @@
   "files": [
     "lib"
   ],
-  "directories": {
-    "lib": "src",
-    "example": "example"
-  },
   "peerDependencies": {
     "typescript": "^3.9.3"
   },
