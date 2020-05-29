@@ -12,15 +12,15 @@ export type Schema<T = any> = T extends ObjectSchema ? ObjectSchema :
 
 interface CommonSchema<V> {
   default?: V;
-  enum?: V[]
   deprecated?: boolean;
   description?: string;
+  enum?: V[],
   externalDocs?: ExternalDocumentation;
+  not?: (Schema | Reference)[];
   nullable?: boolean;
   readOnly?: boolean;
   title?: string;
   writeOnly?: boolean;
-  not?: (Schema | Reference)[];
 }
 
 export interface ArraySchema extends CommonSchema<any> {
@@ -82,9 +82,9 @@ export interface IntegerSchema extends CommonSchema<number> {
 }
 
 export interface ComposedSchema extends CommonSchema<any> {
-  type?: undefined;
   allOf?: (Schema | Reference)[];
   anyOf?: (Schema | Reference)[];
   discriminator?: Discriminator;
   oneOf?: (Schema | Reference)[];
+  type?: undefined;
 }

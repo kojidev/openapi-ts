@@ -89,7 +89,7 @@ export function resolveRefs<T>(
   src: T,
   components: Components,
 ): T extends ObjectAllowRef<infer A> ? A :
-  T extends ArrayAllowRef<infer A> ? A[] : never {
+    T extends ArrayAllowRef<infer A> ? A[] : never {
   if (Array.isArray(src)) {
     return src.map((it) => resolveRefs(it, components)) as any;
   }
