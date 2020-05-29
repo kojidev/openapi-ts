@@ -29,14 +29,14 @@ export type ObjectAllowRef<T extends ComponentObject> = {
 export type ArrayAllowRef<K> = Array<AllowRef<K>>;
 
 export class Ref<CK extends keyof Components, V extends ObjectAllowRef<ComponentObject> = any> {
-  readonly value: V;
+  value: V | null;
 
   readonly componentsKey: CK;
 
   readonly key: string;
 
   constructor(
-    value: V,
+    value: null | V,
     componentsKey: CK,
     key: string,
   ) {
@@ -48,7 +48,7 @@ export class Ref<CK extends keyof Components, V extends ObjectAllowRef<Component
 
 export function schemaRef<T extends ObjectAllowRef<Schema>>(
   key: string,
-  schema: T,
+  schema: T | null = null,
 ): Ref<'schemas', T> {
   return new Ref(
     schema,
@@ -89,13 +89,15 @@ export function resolveRefs<T>(
   src: T,
   components: Components,
 ): T extends ObjectAllowRef<infer A> ? A :
-    T extends ArrayAllowRef<infer A> ? A[] : never {
+  T extends ArrayAllowRef<infer A> ? A[] : never {
   if (Array.isArray(src)) {
     return src.map((it) => resolveRefs(it, components)) as any;
-  } if (typeof src === 'object') {
+  }
+  if (typeof src === 'object') {
     if (src instanceof InlineRef) {
       return toReference(src.inlinedRef, components).$ref as any;
-    } if (src instanceof Ref) {
+    }
+    if (src instanceof Ref) {
       return toReference(src, components) as any;
     }
 

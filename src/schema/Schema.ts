@@ -10,7 +10,9 @@ export type Schema<T = any> = T extends ObjectSchema ? ObjectSchema :
           T extends BooleanSchema ? BooleanSchema :
             T extends ComposedSchema ? ComposedSchema : never;
 
-interface CommonSchema {
+interface CommonSchema<V> {
+  default?: V;
+  enum?: V[]
   deprecated?: boolean;
   description?: string;
   externalDocs?: ExternalDocumentation;
@@ -18,9 +20,10 @@ interface CommonSchema {
   readOnly?: boolean;
   title?: string;
   writeOnly?: boolean;
+  not?: Array<Schema | Reference>;
 }
 
-export interface ArraySchema extends CommonSchema {
+export interface ArraySchema extends CommonSchema<any> {
   items: Schema | Reference;
   maxItems?: number;
   minItems?: number;
@@ -28,7 +31,7 @@ export interface ArraySchema extends CommonSchema {
   uniqueItems?: boolean;
 }
 
-export interface ObjectSchema extends CommonSchema {
+export interface ObjectSchema extends CommonSchema<any> {
   additionalProperties?: boolean | Schema | Reference;
   discriminator?: Discriminator;
   maxProperties?: number;
@@ -38,9 +41,7 @@ export interface ObjectSchema extends CommonSchema {
   type: 'object';
 }
 
-export interface StringSchema {
-  default?: string;
-  enum?: string[];
+export interface StringSchema extends CommonSchema<string> {
   example?: string | null;
   format?: string;
   maxLength?: number;
@@ -49,14 +50,14 @@ export interface StringSchema {
   type: 'string'
 }
 
-export interface BooleanSchema {
+export interface BooleanSchema extends CommonSchema<boolean> {
   default?: boolean;
   example?: boolean | null;
   format?: string;
   type: 'boolean'
 }
 
-export interface NumberSchema {
+export interface NumberSchema extends CommonSchema<number> {
   default?: number;
   example?: number | null;
   exclusiveMaximum?: number;
@@ -68,7 +69,7 @@ export interface NumberSchema {
   type: 'number';
 }
 
-export interface IntegerSchema {
+export interface IntegerSchema extends CommonSchema<number> {
   default?: number;
   example?: number | null;
   exclusiveMaximum?: number;
@@ -80,10 +81,10 @@ export interface IntegerSchema {
   type: 'integer'
 }
 
-export interface ComposedSchema extends CommonSchema {
+export interface ComposedSchema extends CommonSchema<any> {
+  type?: undefined;
   allOf?: (Schema | Reference)[];
   anyOf?: (Schema | Reference)[];
   discriminator?: Discriminator;
-  not?: Array<Schema|Reference>;
   oneOf?: (Schema | Reference)[];
 }
