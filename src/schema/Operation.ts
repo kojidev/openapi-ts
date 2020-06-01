@@ -3,13 +3,21 @@ import { Reference } from './Reference';
 import { RequestBody } from './RequestBody';
 import { Responses } from './Responses';
 import { SecurityRequirement } from './SecurityRequirement';
+import { Callback } from './Callback';
+import { ExternalDocumentation } from './ExternalDocumentation';
+import { Server } from './Server';
 
 export interface Operation {
+  callbacks?: { [_: string]: string | Callback | Reference; };
+  deprecated?: boolean;
+  description?: string;
+  externalDocs?: ExternalDocumentation;
   operationId?: string;
   parameters?: (Parameter | Reference)[];
   requestBody?: RequestBody | Reference;
   responses: Responses;
   security?: SecurityRequirement[];
+  servers?: Server[];
   summary?: string;
   tags?: string[];
 }
