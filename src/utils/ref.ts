@@ -71,34 +71,53 @@ export function inlineRef<T extends Ref<'schemas'>>(
   return new InlineRef(ref);
 }
 
-function toReference<K extends keyof Components>(src: Ref<K>, components: Components): Reference {
+function toReference<K extends keyof Components>(
+  src: Ref<K>,
+  components: Components,
+  set: Set<Ref<any>>,
+): Reference {
   const key = src.key.split(' ').join('-') as keyof Components[K];
 
-  if (components[src.componentsKey] === undefined) {
-    components[src.componentsKey] = {};
-  }
+  if (!set.has(src)) {
+    set.add(src);
+    if (components[src.componentsKey] === undefined) {
+      components[src.componentsKey] = {};
+    }
 
-  components[src.componentsKey][key] = resolveRefs(src.value, components) as Components[K][typeof key];
+    components[src.componentsKey][key] = doResolveRefs(src.value, components, set) as Components[K][typeof key];
+  }
 
   return {
     $ref: `#/components/${src.componentsKey}/${key}`,
   };
 }
 
+type Resolved<T> = T extends ObjectAllowRef<infer A> ? A :
+  T extends ArrayAllowRef<infer A> ? A[] : never;
+
 export function resolveRefs<T>(
   src: T,
   components: Components,
-): T extends ObjectAllowRef<infer A> ? A :
-    T extends ArrayAllowRef<infer A> ? A[] : never {
+): Resolved<T> {
+  const set = new Set<Ref<any>>();
+
+  return doResolveRefs(src, components, set);
+}
+
+function doResolveRefs<T>(
+  src: T,
+  components: Components,
+  set: Set<Ref<any>>,
+): Resolved<T> {
   if (Array.isArray(src)) {
-    return src.map((it) => resolveRefs(it, components)) as any;
+    return src.map((it) => doResolveRefs(it, components, set)) as any;
   }
   if (typeof src === 'object') {
     if (src instanceof InlineRef) {
-      return toReference(src.inlinedRef, components).$ref as any;
+      return toReference(src.inlinedRef, components, set).$ref as any;
     }
     if (src instanceof Ref) {
-      return toReference(src, components) as any;
+      return toReference(src, components, set) as any;
     }
 
     const result: any = {};
@@ -106,7 +125,7 @@ export function resolveRefs<T>(
     Object
       .entries(src)
       .forEach(([key, value]) => {
-        result[key] = resolveRefs(value, components);
+        result[key] = doResolveRefs(value, components, set);
       });
 
     return result;

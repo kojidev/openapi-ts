@@ -81,10 +81,11 @@ export interface IntegerSchema extends CommonSchema<number> {
   type: 'integer'
 }
 
-export interface ComposedSchema extends CommonSchema<any> {
-  allOf?: (Schema | Reference)[];
-  anyOf?: (Schema | Reference)[];
+type EitherOf = { allOf: (Schema | Reference)[]; } |
+{ anyOf: (Schema | Reference)[]; } |
+{ oneOf: (Schema | Reference)[]; };
+
+export type ComposedSchema = CommonSchema<any> & EitherOf & {
   discriminator?: Discriminator;
-  oneOf?: (Schema | Reference)[];
   type?: undefined;
-}
+};
