@@ -16,21 +16,21 @@ export interface Parameter {
   schema?: Schema | Reference;
 }
 
-export interface CookieParameter {
+export interface CookieParameter extends Parameter {
   in: 'cookie';
   required?: boolean;
 }
 
-export interface HeaderParameter {
+export interface HeaderParameter extends Parameter {
   in: 'header';
   required?: boolean;
 }
 
-export interface PathParameter {
+export interface PathParameter extends Parameter {
   in: 'path';
 }
 
-export interface QueryParameter {
+export interface QueryParameter extends Parameter {
   allowReserved?: boolean;
   in: 'query';
   required?: boolean;
