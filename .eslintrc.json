@@ -31,8 +31,6 @@
     }
   ],
   "rules": {
-    // TODO: https://github.com/iamturns/eslint-config-airbnb-typescript/issues/95
-    "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
