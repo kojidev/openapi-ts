@@ -10,7 +10,7 @@ export type Schema<T = any> = T extends ObjectSchema ? ObjectSchema :
           T extends BooleanSchema ? BooleanSchema :
             T extends ComposedSchema ? ComposedSchema : never;
 
-interface CommonSchema<V> {
+export interface CommonSchema<V> {
   default?: V;
   deprecated?: boolean;
   description?: string;

@@ -3,4 +3,5 @@ export {
   inlineRef,
   AllowRef,
   Ref,
+  resolveRefs,
 } from './ref';

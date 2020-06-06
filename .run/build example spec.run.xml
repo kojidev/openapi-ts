@@ -1,5 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="build example spec" type="NodeJSConfigurationType" node-parameters="-r ts-node/register" path-to-js-file="example/bin/build.ts" working-dir="$PROJECT_DIR$">
-    <method v="2" />
-  </configuration>
-</component>

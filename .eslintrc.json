@@ -22,12 +22,6 @@
       "rules": {
         "import/no-cycle": "off"
       }
-    },
-    {
-      "files": "example/bin/build.ts",
-      "rules": {
-        "no-console": "off"
-      }
     }
   ],
   "rules": {
