@@ -5,7 +5,7 @@ import { Reference } from './Reference';
 
 type ParameterIn = 'query' | 'header' | 'path' | 'cookie';
 
-export interface Parameter {
+interface CommonParameter {
   content?: { [contentType: string]: string | MediaType; };
   deprecated?: boolean;
   description?: string;
@@ -16,22 +16,25 @@ export interface Parameter {
   schema?: Schema | Reference;
 }
 
-export interface CookieParameter extends Parameter {
+export interface CookieParameter extends CommonParameter {
   in: 'cookie';
   required?: boolean;
 }
 
-export interface HeaderParameter extends Parameter {
+export interface HeaderParameter extends CommonParameter {
   in: 'header';
   required?: boolean;
 }
 
-export interface PathParameter extends Parameter {
+export interface PathParameter extends CommonParameter {
   in: 'path';
+  required: true,
 }
 
-export interface QueryParameter extends Parameter {
+export interface QueryParameter extends CommonParameter {
   allowReserved?: boolean;
   in: 'query';
   required?: boolean;
 }
+
+export type Parameter = CookieParameter | HeaderParameter | PathParameter | QueryParameter;
