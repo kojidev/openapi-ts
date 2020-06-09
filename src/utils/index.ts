@@ -1,5 +1,6 @@
 export {
   schemaRef,
+  responseRef,
   inlineRef,
   AllowRef,
   Ref,

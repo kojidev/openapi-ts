@@ -3,6 +3,7 @@ import { Reference } from '../schema/Reference';
 import { Discriminator } from '../schema/Discriminator';
 import { NoExtraProperties } from './noExtraProperties';
 import { Components } from '../schema/Components';
+import { Response } from '../schema';
 
 export type AllowRef<T> =
   T extends NoExtraProperties<Reference> ? (T | Ref<keyof Components>) :
@@ -53,6 +54,17 @@ export function schemaRef<T extends ObjectAllowRef<Schema>>(
   return new Ref(
     schema,
     'schemas',
+    key,
+  );
+}
+
+export function responseRef<T extends AllowRef<Response>>(
+  key: string,
+  response: T | null = null,
+): Ref<'responses', T> {
+  return new Ref(
+    response,
+    'responses',
     key,
   );
 }
