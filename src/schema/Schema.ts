@@ -31,15 +31,17 @@ export interface ArraySchema extends CommonSchema<any> {
   uniqueItems?: boolean;
 }
 
-export interface ObjectSchema extends CommonSchema<any> {
-  additionalProperties?: boolean | Schema | Reference;
+export type ObjectSchema = CommonSchema<any> & {
   discriminator?: Discriminator;
   maxProperties?: number;
   minProperties?: number;
-  properties: { [propertyName: string]: Schema | Reference; };
   required?: string[];
   type: 'object';
-}
+} & ({
+  properties: { [propertyName: string]: Schema | Reference; };
+} | {
+  additionalProperties: boolean | Schema | Reference;
+});
 
 export interface StringSchema extends CommonSchema<string> {
   example?: string | null;
