@@ -3,7 +3,10 @@ import { Reference } from '../schema/Reference';
 import { Discriminator } from '../schema/Discriminator';
 import { NoExtraProperties } from './noExtraProperties';
 import { Components } from '../schema/Components';
-import { Response } from '../schema';
+import {
+  Parameter,
+  Response,
+} from '../schema';
 
 export type AllowRef<T> =
   T extends NoExtraProperties<Reference> ? (T | Ref<keyof Components>) :
@@ -21,15 +24,17 @@ type ComponentObjects = {
   [K in keyof Components]-?: Exclude<NonNullable<Components[K]>[keyof Components[K]], Reference>;
 };
 
-type ComponentObject = ComponentObjects[keyof ComponentObjects];
+type ComponentObject<K extends keyof ComponentObjects> = ComponentObjects[K];
 
-export type ObjectAllowRef<T extends ComponentObject> = {
+type AnyComponentObject = ComponentObjects[keyof Components];
+
+export type ObjectAllowRef<T extends AnyComponentObject> = {
   [K in keyof T]: AllowRef<T[K]>;
 };
 
 export type ArrayAllowRef<K> = Array<AllowRef<K>>;
 
-export class Ref<CK extends keyof Components, V extends ObjectAllowRef<ComponentObject> = any> {
+export class Ref<CK extends keyof Components, V extends ObjectAllowRef<ComponentObject<CK>> = any> {
   value: V | null;
 
   readonly componentsKey: CK;
@@ -65,6 +70,17 @@ export function responseRef<T extends AllowRef<Response>>(
   return new Ref(
     response,
     'responses',
+    key,
+  );
+}
+
+export function parameterRef<T extends AllowRef<Parameter>>(
+  key: string,
+  parameter: T | null = null,
+): Ref<'parameters', T> {
+  return new Ref(
+    parameter,
+    'parameters',
     key,
   );
 }
