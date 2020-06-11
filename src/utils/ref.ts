@@ -5,6 +5,7 @@ import { NoExtraProperties } from './noExtraProperties';
 import { Components } from '../schema/Components';
 import {
   Parameter,
+  RequestBody,
   Response,
 } from '../schema';
 
@@ -81,6 +82,17 @@ export function parameterRef<T extends AllowRef<Parameter>>(
   return new Ref(
     parameter,
     'parameters',
+    key,
+  );
+}
+
+export function requestBodyRef<T extends AllowRef<RequestBody>>(
+  key: string,
+  parameter: T | null = null,
+): Ref<'requestBodies', T> {
+  return new Ref(
+    parameter,
+    'requestBodies',
     key,
   );
 }
