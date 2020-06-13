@@ -1,6 +1,6 @@
 {
   "name": "@kojidev/openapi-ts",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "Library that helps to maintain OpenAPI documentation",
   "repository": "github:kojidev/openapi-ts",
   "license": "MIT",
