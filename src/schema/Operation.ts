@@ -8,7 +8,7 @@ import { ExternalDocumentation } from './ExternalDocumentation';
 import { Server } from './Server';
 
 export interface Operation {
-  callbacks?: { [_: string]: string | Callback | Reference; };
+  callbacks?: { [identifier: string]: Callback | Reference; };
   deprecated?: boolean;
   description?: string;
   externalDocs?: ExternalDocumentation;
