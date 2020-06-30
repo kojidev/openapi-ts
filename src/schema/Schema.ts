@@ -2,6 +2,8 @@ import { Reference } from './Reference';
 import { Discriminator } from './Discriminator';
 import { ExternalDocumentation } from './ExternalDocumentation';
 
+// maullable: 123 passed
+
 export type Schema<T = any> = T extends ObjectSchema ? ObjectSchema :
   T extends ArraySchema ? ArraySchema :
     T extends StringSchema ? StringSchema :
