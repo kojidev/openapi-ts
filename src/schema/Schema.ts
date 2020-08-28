@@ -4,13 +4,14 @@ import { ExternalDocumentation } from './ExternalDocumentation';
 
 // maullable: 123 passed
 
-export type Schema<T = any> = T extends ObjectSchema ? ObjectSchema :
-  T extends ArraySchema ? ArraySchema :
-    T extends StringSchema ? StringSchema :
-      T extends IntegerSchema ? IntegerSchema :
-        T extends NumberSchema ? NumberSchema :
-          T extends BooleanSchema ? BooleanSchema :
-            T extends ComposedSchema ? ComposedSchema : never;
+export type Schema =
+  ObjectSchema |
+  ArraySchema |
+  StringSchema |
+  IntegerSchema |
+  NumberSchema |
+  BooleanSchema |
+  ComposedSchema;
 
 export interface CommonSchema<V> {
   default?: V;
