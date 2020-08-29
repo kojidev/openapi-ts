@@ -35,16 +35,14 @@ export interface ArraySchema extends CommonSchema<any> {
 }
 
 export type ObjectSchema = CommonSchema<any> & {
+  additionalProperties?: boolean | Schema | Reference;
   discriminator?: Discriminator;
   maxProperties?: number;
   minProperties?: number;
+  properties?: { [propertyName: string]: Schema | Reference; };
   required?: string[];
   type: 'object';
-} & ({
-  properties: { [propertyName: string]: Schema | Reference; };
-} | {
-  additionalProperties: boolean | Schema | Reference;
-});
+};
 
 export interface StringSchema extends CommonSchema<string> {
   example?: string | null;
