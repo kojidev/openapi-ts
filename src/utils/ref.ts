@@ -97,7 +97,7 @@ export function requestBodyRef<T extends AllowRef<RequestBody>>(
   );
 }
 
-class InlineRef<T extends Ref<'schemas'>> {
+export class InlineRef<T extends Ref<'schemas'>> {
   readonly inlinedRef: T;
 
   constructor(inlinedRef: T) {
