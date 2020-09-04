@@ -11,7 +11,8 @@ export type Schema =
   IntegerSchema |
   NumberSchema |
   BooleanSchema |
-  ComposedSchema;
+  ComposedSchema |
+  CommonSchema<any>;
 
 export interface CommonSchema<V> {
   default?: V;
