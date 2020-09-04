@@ -6,6 +6,6 @@ import { Link } from './Link';
 export interface Response {
   content?: { [mimeType: string]: MediaType; };
   description: string;
-  headers?: { [headerName: string]: string | Header | Reference; };
-  links?: { [key: string]: string | Link | Reference; };
+  headers?: { [headerName: string]: Header | Reference; };
+  links?: { [key: string]: Link | Reference; };
 }

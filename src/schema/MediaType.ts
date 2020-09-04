@@ -6,6 +6,6 @@ import { Example } from './Example';
 export interface MediaType {
   encoding?: { [key: string]: Encoding; };
   example?: any;
-  examples?: { [key: string]: string | Example | Reference; };
+  examples?: { [key: string]: Example | Reference; };
   schema?: Schema | Reference;
 }

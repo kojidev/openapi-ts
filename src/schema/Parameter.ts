@@ -6,11 +6,11 @@ import { Reference } from './Reference';
 type ParameterIn = 'query' | 'header' | 'path' | 'cookie';
 
 interface CommonParameter {
-  content?: { [contentType: string]: string | MediaType; };
+  content?: { [contentType: string]: MediaType; };
   deprecated?: boolean;
   description?: string;
   example?: any;
-  examples?: { [exampleName: string]: string | Example | Reference; };
+  examples?: { [exampleName: string]: Example | Reference; };
   in: ParameterIn;
   name: string;
   schema?: Schema | Reference;
