@@ -2,8 +2,6 @@ import { Reference } from './Reference';
 import { Discriminator } from './Discriminator';
 import { ExternalDocumentation } from './ExternalDocumentation';
 
-// maullable: 123 passed
-
 export type Schema =
   ObjectSchema |
   ArraySchema |

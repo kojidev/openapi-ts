@@ -14,7 +14,7 @@ export interface Operation {
   externalDocs?: ExternalDocumentation;
   operationId?: string;
   parameters?: (Parameter | Reference)[];
-  requestBody?: RequestBody | Reference; // TODO: Schema passes
+  requestBody?: RequestBody | Reference;
   responses: Responses;
   security?: SecurityRequirement[];
   servers?: Server[];
