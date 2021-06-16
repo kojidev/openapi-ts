@@ -1,10 +1,3 @@
 export {
-  schemaRef,
-  responseRef,
-  parameterRef,
-  requestBodyRef,
-  inlineRef,
-  AllowRef,
-  Ref,
-  resolveRefs,
+  ReferableComponents,
 } from './ref';
